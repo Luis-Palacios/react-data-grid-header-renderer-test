@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ReactDataGrid from 'react-data-grid';
+import 'bootstrap/dist/css/bootstrap.css';
 
-function App() {
+function MyCustomRenderer() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={
+      {
+        borderColor: 'blue',
+        borderWidth: '5px 0 0 0',
+        borderStyle: 'solid'
+      }
+    }>
+
     </div>
-  );
+  )
 }
 
-export default App;
+const TotalCostHeader = item => (<MyCustomRenderer>{item.column.name}</MyCustomRenderer>)
+
+const columns = [
+  { key: 'id', name: 'ID' },
+  { key: 'title', name: 'Title' },
+  { key: 'count', name: 'Count', headerRenderer: TotalCostHeader, sortable: false } ];
+
+const rows = [{id: 0, title: 'row1', count: 20}, {id: 1, title: 'row1', count: 40}, {id: 2, title: 'row1', count: 60}];
+
+function App() {
+  return (<ReactDataGrid
+  columns={columns}
+  rowGetter={i => rows[i]}
+  rowsCount={3}
+  minHeight={150} />);
+}
+
+export default App
